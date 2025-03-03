@@ -50,6 +50,40 @@ public class EmployeeService {
         return ErrorKinds.SUCCESS;
     }
 
+    // 開始 : 課題 Lesson 34 Chapter 6 追加
+    // 従業員更新
+    @Transactional
+    public ErrorKinds update(Employee employee) {
+
+        // 更新対象従業員のデータをリポジトリからtemporaryDataへコピーし、
+        // 更新せず値を引き継ぐ項目はこの中からemployeeへセットする
+        Employee temporaryData = findByCode(employee.getCode());
+
+        if (employee.getPassword() == "") {
+            // パスワード未入力→元の値を引き継ぐ
+            employee.setPassword(temporaryData.getPassword());
+        } else {
+            // パスワード入力済→この値に変更
+            // パスワードチェック(新規登録と同じ処理)
+            ErrorKinds result = employeePasswordCheck(employee);
+            if (ErrorKinds.CHECK_OK != result) {
+                return result;
+            }
+        }
+
+        employee.setDeleteFlg(false);
+
+        // CreateAt(登録日時)は変更しないため元の値を引き継ぐ
+        employee.setCreatedAt(temporaryData.getCreatedAt());
+        // UpdateAt(更新日時)はnowをセット
+        LocalDateTime now = LocalDateTime.now();
+        employee.setUpdatedAt(now);
+
+        employeeRepository.save(employee);
+        return ErrorKinds.SUCCESS;
+    }
+    // 終了 : 課題 Lesson 34 Chapter 6 追加
+
     // 従業員削除
     @Transactional
     public ErrorKinds delete(String code, UserDetail userDetail) {

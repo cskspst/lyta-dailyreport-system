@@ -45,6 +45,11 @@
                                     </tr>
                                 </table>
                                 <div class="mt-5 row g-1">
+                                    <!--/* 開始 : 課題 Lesson 34 Chapter 6 追加 */-->
+                                    <div class="col-auto">
+                                        <a th:href="@{/employees/{code}/update(code=${code})}" class="btn btn-primary">更新</a>
+                                    </div>
+                                    <!--/* 終了 : 課題 Lesson 34 Chapter 6 追加 */-->
                                     <div class="col-auto">
                                         <form name="form" th:action="@{/employees/{code}/delete(code=${code})}" th:method="post">
                                             <input type="submit" value="削除" class="btn btn-primary">
