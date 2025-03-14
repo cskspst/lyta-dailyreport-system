@@ -1,4 +1,3 @@
-
 package com.techacademy.controller;
 
 import org.springframework.stereotype.Controller;
@@ -16,7 +15,10 @@ public class TopController {
     // ログイン後のトップページ表示
     @GetMapping(value = "/")
     public String top() {
-        return "redirect:/employees";
+        // 開始 : 変更 : Lesson 34 Chapter 7 課題
+        return "redirect:/reports";
+        // return "redirect:/employees";
+        // 終了 : 変更 : Lesson 34 Chapter 7 課題
     }
 
 }
